@@ -1,0 +1,17 @@
+# Segredos e variáveis de ambiente — NUNCA versionar
+.env
+.env.*
+*.local
+token*.txt
+*secret*
+*credential*
+
+# Dependências
+node_modules/
+
+# Vercel
+.vercel/
+
+# Sistema
+.DS_Store
+Thumbs.db
