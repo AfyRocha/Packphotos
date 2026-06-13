@@ -17,8 +17,6 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeLb(); });
 const form = document.getElementById('orderForm');
 const statusEl = form.querySelector('.form-status');
 const submitBtn = form.querySelector('[type="submit"]');
-const pixResult = document.getElementById('pixResult');
-let pollTimer = null;
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -33,7 +31,7 @@ form.addEventListener('submit', async (e) => {
   };
 
   submitBtn.disabled = true;
-  statusEl.textContent = 'Gerando seu Pix...';
+  statusEl.textContent = 'Abrindo o pagamento via Pix...';
 
   try {
     const resp = await fetch('/api/create-order', {
@@ -42,52 +40,12 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(payload),
     });
     const result = await resp.json();
-    if (!resp.ok || !result.qrCodeBase64) {
+    if (!resp.ok || !result.checkoutUrl) {
       throw new Error(result.error || 'falha');
     }
-    showPix(result);
+    window.location.href = result.checkoutUrl;
   } catch (err) {
-    statusEl.textContent = 'Não foi possível gerar o Pix. Tente novamente em instantes.';
+    statusEl.textContent = 'Não foi possível abrir o pagamento. Tente novamente em instantes.';
     submitBtn.disabled = false;
   }
 });
-
-function showPix(r) {
-  document.getElementById('pixOrder').textContent = r.orderNumber;
-  document.getElementById('pixQr').src = 'data:image/png;base64,' + r.qrCodeBase64;
-  document.getElementById('pixCode').value = r.qrCode;
-  form.hidden = true;
-  pixResult.hidden = false;
-  pixResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  startPolling(r.orderId, r.orderNumber);
-}
-
-const pixCopyBtn = document.getElementById('pixCopy');
-if (pixCopyBtn) {
-  pixCopyBtn.addEventListener('click', () => {
-    const code = document.getElementById('pixCode');
-    code.select();
-    if (navigator.clipboard) navigator.clipboard.writeText(code.value).catch(() => {});
-    else document.execCommand('copy');
-    pixCopyBtn.textContent = 'Copiado!';
-    setTimeout(() => { pixCopyBtn.textContent = 'Copiar'; }, 2000);
-  });
-}
-
-function startPolling(orderId, orderNumber) {
-  const statusP = document.getElementById('pixStatus');
-  pollTimer = setInterval(async () => {
-    try {
-      const r = await fetch('/api/order-status?id=' + encodeURIComponent(orderId));
-      const j = await r.json();
-      if (j.status === 'pagamento_confirmado') {
-        clearInterval(pollTimer);
-        statusP.textContent = 'Pagamento confirmado! Redirecionando...';
-        window.location.href = 'sucesso.html?order=' + encodeURIComponent(orderNumber);
-      } else if (j.status === 'pagamento_recusado') {
-        clearInterval(pollTimer);
-        statusP.textContent = 'Pagamento não aprovado. Recarregue a página para tentar de novo.';
-      }
-    } catch (e) { /* ignora e tenta de novo */ }
-  }, 4000);
-}

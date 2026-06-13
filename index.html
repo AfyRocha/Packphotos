@@ -184,21 +184,9 @@
         <label class="consent"><input type="checkbox" required /> Confirmo que os dados informados estão corretos.</label>
         <label class="consent"><input type="checkbox" required /> Li e aceito os termos de uso e a política de privacidade.</label>
 
-        <button class="btn btn-primary submit-btn" type="submit">Gerar Pix e finalizar pedido</button>
+        <button class="btn btn-primary submit-btn" type="submit">Finalizar e pagar com Pix</button>
         <p class="form-status" role="status" aria-live="polite"></p>
       </form>
-
-      <div class="order-form glass" id="pixResult" hidden style="text-align:center">
-        <h3>Pague com Pix para concluir</h3>
-        <p>Pedido <strong id="pixOrder"></strong> &middot; <strong>R$ 57,00</strong></p>
-        <img id="pixQr" alt="QR Code do Pix" width="240" height="240" style="display:block;margin:1rem auto;background:#fff;padding:8px;border-radius:12px" />
-        <p>Abra o app do seu banco, escolha <b>Pix &rsaquo; Pagar com QR Code</b> e escaneie. Ou use o código copia-e-cola:</p>
-        <div style="display:flex;gap:.5rem;max-width:440px;margin:0 auto 1rem">
-          <input id="pixCode" readonly style="flex:1;min-width:0" />
-          <button type="button" id="pixCopy" class="btn">Copiar</button>
-        </div>
-        <p class="form-status" id="pixStatus" role="status" aria-live="polite">Aguardando o pagamento... esta tela atualiza sozinha.</p>
-      </div>
     </section>
 
     <section class="section-pad faq-section">
