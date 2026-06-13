@@ -50,7 +50,6 @@ export default async function handler(req, res) {
             { id: 'ticket' },
             { id: 'atm' },
             { id: 'prepaid_card' },
-            { id: 'account_money' },
           ],
           installments: 1,
         },
