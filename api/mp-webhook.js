@@ -62,6 +62,9 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('Webhook error:', err);
+    // Pagamento inexistente (ex.: notificação de simulação): reconhece e ignora.
+    const status = err && (err.status || err.statusCode);
+    if (status === 404) return res.status(200).json({ ignored: 'payment_not_found' });
     return res.status(500).json({ error: 'webhook_failed' });
   }
 }
