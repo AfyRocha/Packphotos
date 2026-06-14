@@ -17,3 +17,7 @@ node_modules/
 Thumbs.db
 
 .vercel
+
+# Kit Restaurante — produto digital (entregue por WhatsApp) e fonte original (não usados pelo site)
+kit restaurante/kit pdf.pdf
+kit restaurante/Site kit restaurante.html
