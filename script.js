@@ -4,7 +4,7 @@ reveals.forEach(el => io.observe(el));
 
 const lb = document.querySelector('.lightbox');
 const lbImg = lb.querySelector('img');
-document.querySelectorAll('.gallery-item').forEach(btn => btn.addEventListener('click', () => {
+document.querySelectorAll('.gallery-item[data-src]').forEach(btn => btn.addEventListener('click', () => {
   lbImg.src = btn.dataset.src;
   lb.classList.add('open');
   lb.setAttribute('aria-hidden','false');
