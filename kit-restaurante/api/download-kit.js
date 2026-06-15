@@ -2,7 +2,7 @@ import { supabase } from '../lib/supabase.js';
 
 // Bucket PRIVADO no Supabase Storage onde o PDF do kit fica guardado.
 const BUCKET = 'entregaveis';
-const PDF_PATH = 'kit pdf.pdf';            // nome do arquivo dentro do bucket
+const PDF_PATH = 'kiti-restaurante-lucrativo.pdf'; // nome do arquivo dentro do bucket
 const DOWNLOAD_NAME = 'Kit-Restaurante-Lucrativo.pdf'; // nome que o cliente recebe
 const SIGNED_URL_TTL = 120;                // segundos que o link fica válido
 
