@@ -54,7 +54,7 @@ export default async function handler(req, res) {
           installments: 1,
         },
         back_urls: {
-          success: `${config.siteUrl}/sucesso.html?order=${order.order_number}`,
+          success: `${config.siteUrl}/sucesso.html?order=${order.order_number}&id=${order.id}`,
           pending: `${config.siteUrl}/pendente.html?order=${order.order_number}`,
           failure: `${config.siteUrl}/erro.html?order=${order.order_number}`,
         },
